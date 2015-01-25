@@ -13,6 +13,7 @@ import pymongo
 from pymongo import ASCENDING, DESCENDING
 
 from agendaform import AgendaForm
+from episodeform import EpisodeForm
 import urllib2
 from BeautifulSoup import BeautifulSoup
 import datetime
@@ -54,7 +55,7 @@ def newepisode(request):
     agendas = agendadb.find().sort("date", pymongo.DESCENDING)
     client.close()
 
-    form = AgendaForm() 
+    form = EpisodeForm() 
 
     return render(request, 'new_episode.html', 
                   {'agendas': agendas, 
