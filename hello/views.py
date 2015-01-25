@@ -47,6 +47,19 @@ def episode(request, number):
                    'person' : person,
                    'shownotes' : shownotes,
                    } )
+def newepisode(request):
+    client = pymongo.MongoClient(MONGODB_URI)
+    db = client.get_default_database()
+    agendadb = db['agendadb']
+    agendas = agendadb.find().sort("date", pymongo.DESCENDING)
+    client.close()
+
+    form = AgendaForm() 
+
+    return render(request, 'new_episode.html', 
+                  {'agendas': agendas, 
+                   'form': form
+                   } )
 
 def agenda(request):
     client = pymongo.MongoClient(MONGODB_URI)
