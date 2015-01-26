@@ -46,20 +46,32 @@ li.border-color-blue {
 li.border-color-green {
     border-color: green;
 }
+ul.agenda {
+    position:absolute;
+    width:25%;
+    right:0;
+}
+
 -->
 </style>
 
 <div id="contents">
-  <ul class="jquery-ui-sortable">
-    
-  </ul>
-  <ul class="jquery-ui-sortable">
+  <ul class="jquery-ui-sortable agenda">
     {% for agenda in agendas %}
-    <li class="ui-state-default border-color-blue"><a href="{{agenda.url}}" target="_blank">{{agenda.title}}</a></li>
+    <li class="ui-state-default border-color-blue">
+      <a href="{{agenda.url}}" target="_blank">{{agenda.title}}</a></li>
     {% endfor %}
   </ul>
-  <div style="clear: both;"></div>
-  
-</div>
+  <form action="/new/" method="POST">{% csrf_token %}
+    <div> title: {{ form.title }}</div>
+    <div> agenda : {{ form.agenda }}</div>
+    <div> person : {{ form.person }}</div>
+    <ul class="jquery-ui-sortable">
+      
+    </ul>
+    <input type="submit" value="Submit" />
+  </form>  
 
+  <div style="clear: both;"></div>
+</div>
 {% include "footer.html" %}
