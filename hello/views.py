@@ -48,6 +48,7 @@ def episode(request, number):
                    'person' : person,
                    'shownotes' : shownotes,
                    } )
+
 def newepisode(request):
     client = pymongo.MongoClient(MONGODB_URI)
     db = client.get_default_database()
