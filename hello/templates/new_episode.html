@@ -1,77 +1,63 @@
 {% include "header.html" %}
 
-<link rel="stylesheet" href="/static/jquery.ui/jquery-ui.min.css">
-<script type="text/javascript" src="/static/jquery/jquery.js"></script>
-<script type="text/javascript" src="/static/jquery.ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/static/css/jquery-ui.min.css">
+<script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
 
-<script>
-<!--
-$( function() {
-    $( '.jquery-ui-sortable' ) . sortable( {
-        connectWith: '.jquery-ui-sortable'
-    } );
-    $( '.jquery-ui-sortable' ) . disableSelection();
-} );
-// -->
-</script>
-
-<style>
-<!--
-ul.jquery-ui-sortable {
-    list-style-type: none;
-    margin: 0 2px;
-    padding: 2px;
-    width: 45%;
+  <style>
+  .sortableContainer {
+    width: 300px;
     float: left;
-    min-height: 1.5em;
-    background-color: beige;
-    border: solid 1px #606060;
-}
-ul.jquery-ui-sortable li {
-    margin: 3px;
-    padding: 0.3em;
-    padding-left: 1em;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: move;
-    height: 5em;
-    overflow: hidden;
-}
-li.border-color-red {
-    border-color: red;
-}
-li.border-color-blue {
-    border-color: blue;
-}
-li.border-color-green {
-    border-color: green;
-}
-ul.agenda {
-    position:absolute;
-    width:25%;
-    right:0;
-}
-
--->
-</style>
+  }
+  #sortable1, #sortable2 {
+    border: 1px solid #ccc;
+    min-height: 20px;
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 0 0 0;
+    margin-right: 10px;
+  }
+  #sortable1 li, #sortable2 li {
+    margin: 0 5px 5px 5px;
+    padding: 5px;
+    font-size: 0.9em;
+  }
+  </style>
+  <script>
+  $(function() {
+    $( "#sortable1, #sortable2" ).sortable({
+      connectWith: ".connectedSortable"
+    }).disableSelection();
+  });
+  </script>
 
 <div id="contents">
-  <ul class="jquery-ui-sortable agenda">
-    {% for agenda in agendas %}
-    <li class="ui-state-default border-color-blue">
-      <a href="{{agenda.url}}" target="_blank">{{agenda.title}}</a></li>
-    {% endfor %}
-  </ul>
-  <form action="/new/" method="POST">{% csrf_token %}
-    <div> title: {{ form.title }}</div>
-    <div> agenda : {{ form.agenda }}</div>
-    <div> person : {{ form.person }}</div>
-    <ul class="jquery-ui-sortable">
+
+  <div class="sortableContainer"> 
+    <span>Agenda</span>
+    <ul id="sortable1" class="connectedSortable">
+      {% for agenda in agendas %}
+      <li class="ui-state-default">
+	<a href="{{agenda.url}}" target="_blank">{{agenda.title}}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="sortableContainer"> 
+    <span>Shownote</span>
+    <form action="/new/" method="POST">{% csrf_token %}
+      <div> title: {{ form.title }}</div>
+      <div> agenda : {{ form.agenda }}</div>
+      <div> person : {{ form.person }}</div>
+      
+      <input type="submit" value="Submit" />
+
+    </form>
+    <ul id="sortable2" class="connectedSortable">
       
     </ul>
-    <input type="submit" value="Submit" />
-  </form>  
+  </div>
 
   <div style="clear: both;"></div>
+  
 </div>
 {% include "footer.html" %}
