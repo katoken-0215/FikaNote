@@ -1,4 +1,5 @@
 {% include "header.html" %}
+{% load filter %}
 
 <link rel="stylesheet" href="/static/css/jquery-ui.min.css">
 <script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
@@ -37,7 +38,9 @@
     <ul id="sortable1" class="connectedSortable">
       {% for agenda in agendas %}
       <li class="ui-state-default">
-	<a href="{{agenda.url}}" target="_blank">{{agenda.title}}</a></li>
+	<a href="{{agenda.url}}" target="_blank">{{agenda.title}}</a>
+        <input type="hidden" name="episode.id" value="{{ agenda|mongo_id}}"/>
+      </li>
       {% endfor %}
     </ul>
   </div>
